@@ -1,19 +1,19 @@
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class example {
-    public int Solution(int n, int k, int[] a) {
-        // 14 2
-        //1 1 0 0 1 1 0 1 1 0 1 1 0 1
-        int answer=0, cnt=0, lt=0;
-        for (int rt = 0; rt < n; rt++) {
-            if(a[rt]==0) cnt++;
-            while(cnt>k) {
-                if(a[lt]==0) cnt--;
-                lt++;
+    public char Solution(int n, String s) {
+        char answer = ' ';
+        HashMap<Character, Integer> map = new HashMap<>();
+        for(char x : s.toCharArray()) {
+            map.put(x, map.getOrDefault(x, 0)+1);
+        }
+        int max = Integer.MIN_VALUE;
+        for(char key : map.keySet()) {
+            if(max < map.get(key)) {
+                max = map.get(key);
+                answer = key;
             }
-            answer = Math.max(answer, rt-lt+1);
         }
         return answer;
     }
@@ -22,11 +22,7 @@ public class example {
         example T = new example();
         Scanner sc = new Scanner(System.in);
         int n = sc.nextInt();
-        int k = sc.nextInt();
-        int[] a = new int[n];
-        for (int i = 0; i < n; i++) {
-            a[i] = sc.nextInt();
-        }
-        System.out.println(T.Solution(n, k, a));
+        String str = sc.next();
+        System.out.println(T.Solution(n, str));
     }
 }
