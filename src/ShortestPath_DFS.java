@@ -1,12 +1,4 @@
 import java.util.*;
-class Node {
-    int data;
-    Node lt, rt;
-    public Node(int val) {
-        data=val;
-        lt=rt=null;
-    }
-}
 public class ShortestPath_DFS {
     Node root;
     public int DFS(int L, Node root){
