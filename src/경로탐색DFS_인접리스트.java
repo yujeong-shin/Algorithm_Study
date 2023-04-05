@@ -22,6 +22,7 @@ public class 경로탐색DFS_인접리스트 {
         Scanner sc = new Scanner(System.in);
         n = sc.nextInt();
         m = sc.nextInt();
+
         graph = new ArrayList<ArrayList<Integer>>();
         ch = new int[n+1];
         for (int i = 0; i <= n; i++) { //인접리스트
