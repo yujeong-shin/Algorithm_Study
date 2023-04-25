@@ -1,3 +1,4 @@
+/*
 import java.util.*;
 class Point implements Comparable<Point>{ // Point 객체를 정렬
     public int x,y;
@@ -58,4 +59,4 @@ public class Main6_7 {
         Collections.sort(arr); // 재정의한 compareTo에 의해서 정렬됨
         for(Point o : arr) System.out.println(o.x + " " + o.y);
     }
-}
+}*/
