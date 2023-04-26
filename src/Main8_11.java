@@ -2,13 +2,13 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Scanner;
 
-class Point {
-    public int x, y;
-    Point(int x, int y){
-        this.x = x;
-        this.y = y;
-    }
-}
+//class Point {
+//    public int x, y;
+//    Point(int x, int y){
+//        this.x = x;
+//        this.y = y;
+//    }
+//}
 public class Main8_11 {
     // 7*7 격자판 미로를 탈출하는 최단경로의 길이를 출력하는 프로그램
     // 첫 번째 줄에 최단으로 움직인 칸의 수를 출력한다. 도착할 수 없으면 -1를 출력한다.
