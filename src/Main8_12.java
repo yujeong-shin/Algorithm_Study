@@ -1,13 +1,13 @@
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Scanner;
-class Point {
-    public int x, y;
-    Point(int x, int y){
-        this.x = x;
-        this.y = y;
-    }
-}
+//class Point {
+//    public int x, y;
+//    Point(int x, int y){
+//        this.x = x;
+//        this.y = y;
+//    }
+//}
 public class Main8_12 {
     static int m, n;
     static int[] dx = {-1, 0, 1, 0};
