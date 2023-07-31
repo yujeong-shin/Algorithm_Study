@@ -1,44 +1,59 @@
-import Main9.Main9_3;
+import java.util.*;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Scanner;
-
-class Time implements Comparable<Time> {
-    public int time;
-    public char state;
-    public Time(int time, char state) {
-        this.time = time;
-        this.state = state;
+class Edge implements Comparable<Edge>{
+    public int vex, cost;
+    Edge(int vex, int cost){
+        this.vex = vex;
+        this.cost = cost;
     }
     @Override
-    public int compareTo(Time o) {
-        if(this.time == o.time) return this.state - o.state; //time이 같다면 state 오름차순
-        else return this.time - o.time; //time 오름차순
+    public int compareTo(Edge ob){
+        return this.cost-ob.cost;
     }
 }
-public class practice {
-    public int Solution(ArrayList<Time> arr){
-        int cnt=0, answer=Integer.MIN_VALUE;
-        Collections.sort(arr);
-        for(Time ob : arr) {
-            if(ob.state=='s') cnt++;
-            else cnt--;
-            answer = Math.max(answer, cnt);
+
+class practice {
+    static int n, m;
+    static ArrayList<ArrayList<Edge>> graph;
+    static int[] dis;
+    public void solution(int v) {
+        PriorityQueue<Edge> pQ = new PriorityQueue<>();
+        pQ.offer(new Edge(v, 0));
+        dis[v]=0;
+        while(!pQ.isEmpty()){
+            Edge tmp = pQ.poll(); //(1, 0)
+            int now=tmp.vex;
+            int nowCost=tmp.cost;
+            if(nowCost>dis[now]) continue; //이미 뻗어져 나간 값보다 꺼낸 객체의 cost가 크다면 생략
+            for(Edge ob : graph.get(now)){ //(2, 12) -> (3, 4)
+                if(dis[ob.vex]>nowCost+ob.cost) {
+                    dis[ob.vex] = nowCost+ob.cost;
+                    pQ.offer(new Edge(ob.vex, nowCost+ob.cost));//그래야 다음에 꺼냈을 때 이 값보다 작아야 update
+                }
+            }
         }
-        return answer;
     }
-    public static void main(String[] args) {
+    public static void main(String[] args){
         practice T = new practice();
-        Scanner sc = new Scanner(System.in);
-        int n = sc.nextInt();
-        ArrayList<Time> arr = new ArrayList<>();
-        for(int i=0; i<n; i++) {
-            int sT = sc.nextInt();
-            int eT = sc.nextInt();
-            arr.add(new Time(sT, 's'));
-            arr.add(new Time(eT, 'e'));
+        Scanner kb = new Scanner(System.in);
+        n=kb.nextInt();
+        m=kb.nextInt();
+        graph = new ArrayList<ArrayList<Edge>>();
+        for(int i=0; i<=n; i++){
+            graph.add(new ArrayList<Edge>());
         }
-        System.out.println(T.Solution(arr));
+        dis=new int[n+1];
+        Arrays.fill(dis, Integer.MAX_VALUE);
+        for(int i=0; i<m; i++){
+            int a=kb.nextInt();
+            int b=kb.nextInt();
+            int c=kb.nextInt();
+            graph.get(a).add(new Edge(b, c));
+        }
+        T.solution(1);
+        for(int i=2; i<=n; i++){
+            if(dis[i]!=Integer.MAX_VALUE) System.out.println(i+" : "+dis[i]);
+            else System.out.println(i+" : impossible");
+        }
     }
 }
