@@ -1,7 +1,7 @@
 package Main9;
 
 import java.util.*;
-class Edge implements Comparable<Edge>{
+/*class Edge implements Comparable<Edge>{
     public int vex;
     public int cost;
     Edge(int vex, int cost) {
@@ -60,3 +60,4 @@ class Main9_5 {
         }
     }
 }
+ */
