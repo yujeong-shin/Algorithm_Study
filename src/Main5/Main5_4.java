@@ -18,7 +18,7 @@ public class Main5_4 {
                 else if(x=='/') stack.push(lt/rt);
             }
         }
-        answer = stack.get(0);
+        answer = stack.get(0); //stack.pop();
         return answer;
     }
     public static void main(String[] args) {
