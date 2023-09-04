@@ -1,9 +1,9 @@
-package DataStructure;
+package Main7;
 
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class 경로탐색DFS_인접리스트 {
+public class Main7_12_인접리스트 {
     static int n, m, answer=0;
     static ArrayList<ArrayList<Integer>> graph;
     static int[] ch;
@@ -20,7 +20,7 @@ public class 경로탐색DFS_인접리스트 {
         }
     }
     public static void main(String[] args) {
-        경로탐색DFS_인접리스트 T = new 경로탐색DFS_인접리스트();
+        Main7_12_인접리스트 T = new Main7_12_인접리스트();
         Scanner sc = new Scanner(System.in);
         n = sc.nextInt();
         m = sc.nextInt();

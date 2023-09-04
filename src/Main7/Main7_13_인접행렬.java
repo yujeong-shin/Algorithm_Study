@@ -1,8 +1,8 @@
-package DataStructure;
+package Main7;
 
 import java.util.Scanner;
 
-public class 경로탐색DFS_인접행렬 {
+public class Main7_13_인접행렬 {
     static int n, m, answer=0;
     static int[][] graph;
     static int[] ch;
@@ -20,7 +20,7 @@ public class 경로탐색DFS_인접행렬 {
     }
 
     public static void main(String[] args) {
-        경로탐색DFS_인접행렬 T = new 경로탐색DFS_인접행렬();
+        Main7_13_인접행렬 T = new Main7_13_인접행렬();
         Scanner sc = new Scanner(System.in);
         n = sc.nextInt();
         m = sc.nextInt();

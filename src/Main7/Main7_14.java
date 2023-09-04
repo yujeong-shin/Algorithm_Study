@@ -1,11 +1,11 @@
-package DataStructure;
+package Main7;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Scanner;
 
-public class 그래프최단거리BFS {
+public class Main7_14 {
     static int n, m, answer=0;
     static ArrayList<ArrayList<Integer>> graph;
     static int[] ch, dis;
@@ -27,7 +27,7 @@ public class 그래프최단거리BFS {
     }
 
     public static void main(String[] args) {
-        그래프최단거리BFS T = new 그래프최단거리BFS();
+        Main7_14 T = new Main7_14();
         Scanner sc = new Scanner(System.in);
         n = sc.nextInt();
         m = sc.nextInt();
