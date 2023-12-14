@@ -11,7 +11,6 @@ class Solution {
             }
         }
         if(!stack.isEmpty()) answer=false;
-        
         return answer;
     }
 }
