@@ -6,42 +6,31 @@ import java.util.Queue;
 import java.util.StringTokenizer;
 
 public class Main {
+    static long a, b;
     public static void main(String[] args) throws IOException {
         BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(bf.readLine());
-        long A = Long.parseLong(st.nextToken());
-        long B = Long.parseLong(st.nextToken());
-        System.out.println(BFS(A, B));
+        a = Long.parseLong(st.nextToken());
+        b = Long.parseLong(st.nextToken());
+        System.out.println(bfs());
     }
+    static int bfs(){
+        int cnt=0;
+        Queue<Long> q = new LinkedList<>();
+        q.add(a);
 
-    static int BFS(long start, long end){
-        int count=0;
-        Queue<Long> Q = new LinkedList<>();
-        boolean[] visited = new boolean[(int) (end+1)];
-        Q.add(start);
-        visited[(int)start]=true;
+        while(!q.isEmpty()){
+            int size = q.size();
 
-        while(!Q.isEmpty()){
-            int len = Q.size();
-            for (int i = 0; i < len; i++) {
-                long cur = Q.poll();
-                if(cur==end) return count+1;
+            for(int i=0; i<size; i++){
+                long tmp = q.poll();
+                if(tmp==b)
+                    return cnt+1;
 
-                //1번 연산. X2
-                long tmp = cur*2;
-                if(tmp <=end && !visited[(int)tmp]){
-                    visited[(int)tmp]=true;
-                    Q.add(tmp);
-                }
-
-                //2번 연산. X10 +1
-                tmp = cur*10+1;
-                if(tmp <=end && !visited[(int)tmp]){
-                    visited[(int)tmp]=true;
-                    Q.add(tmp);
-                }
+                if(tmp*2<=b) q.add(tmp*2);
+                if(tmp*10+1<=b) q.add(tmp*10+1);
             }
-            count++;
+            cnt++;
         }
         return -1;
     }
