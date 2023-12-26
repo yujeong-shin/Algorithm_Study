@@ -29,9 +29,9 @@ public class Main {
             } else sb.append("error");
             sb.append("\n");
         }
-//        System.out.println(sb);
-        bw.write(sb.toString());
-        bw.flush();
+        System.out.println(sb);
+//        bw.write(sb.toString());
+//        bw.flush();
     }
 
     static void makeIntArray(String str){
