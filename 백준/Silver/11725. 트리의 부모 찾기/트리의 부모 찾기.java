@@ -1,43 +1,45 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.StringTokenizer;
+import java.io.*;
+import java.util.*;
 
 public class Main {
-    static List<List<Integer>> map;
-    static boolean[] visit;
+    static ArrayList<ArrayList<Integer>> graph;
+    static boolean[] visited;
     static int[] parent;
-    public static void main(String[] args) throws IOException {
-        BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st;
-        int node = Integer.parseInt(bf.readLine());
-        visit = new boolean[node+1];
-        parent = new int[node+1];;
-        map = new ArrayList<>();
-        for(int i=0; i<=node ;i++){
-            map.add(new ArrayList<>());
-        }
-        for(int i=1; i<node; i++){
-            st = new StringTokenizer(bf.readLine());
-            int ver1 = Integer.parseInt(st.nextToken());
-            int ver2 = Integer.parseInt(st.nextToken());
-            map.get(ver1).add(ver2);
-            map.get(ver2).add(ver1);
-        }
-        DFS(1);
-        for (int i = 2; i < parent.length; i++) {
-            System.out.println(parent[i]);
+    static public void BFS(int start) {
+        Deque<Integer> deque = new ArrayDeque<>();
+        deque.add(start);
+        while (!deque.isEmpty()) {
+            int cv = deque.poll();
+            for (int nv : graph.get(cv)) {
+                if(!visited[nv]) {
+                    visited[nv] = true;
+                    parent[nv] = cv;
+                    deque.add(nv);
+                }
+            }
         }
     }
-    public static void DFS(int cv){
-        visit[cv] = true;
-        for(int nv : map.get(cv)) {
-            if(!visit[nv]) {
-                parent[nv]=cv;
-                DFS(nv);
-            }
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st;
+        graph = new ArrayList<>();
+        int N = Integer.parseInt(br.readLine());
+        for (int i = 0; i <= N; i++) {
+            graph.add(new ArrayList<>());
+        }
+        for (int i = 0; i < N-1; i++) {
+            st = new StringTokenizer(br.readLine());
+            int a = Integer.parseInt(st.nextToken());
+            int b = Integer.parseInt(st.nextToken());
+            graph.get(a).add(b);
+            graph.get(b).add(a);
+        }
+        visited = new boolean[N+1];
+        parent = new int[N+1];
+        visited[1] = true;
+        BFS(1);
+        for (int i = 2; i <= N; i++) {
+            System.out.println(parent[i]);
         }
     }
 }
