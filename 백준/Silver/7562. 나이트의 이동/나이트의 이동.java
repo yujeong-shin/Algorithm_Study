@@ -1,66 +1,62 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.*;
-class Point {
-    int x, y;
-    Point(int x, int y) {
+
+class knight {
+    int x, y, cnt;
+    public knight(int x, int y, int cnt){
         this.x = x;
-        this.y = y;
+        this.y =y ;
+        this.cnt = cnt;
     }
 }
 public class Main {
-    static int[] dx = {-1, -2, -2, -1, 1, 2, 2, 1};
-    static int[] dy = {-2, -1, 1, 2, 2, 1, -1, -2};
-    static int mapSize;
-    static int[][] ch;
-    static List<Integer> result = new ArrayList<>();
-    public static void main(String[] args) throws IOException {
-        BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st;
-        st = new StringTokenizer(bf.readLine());
-        int t = Integer.parseInt(st.nextToken());
-        for (int i = 0; i < t; i++) {
-            st = new StringTokenizer(bf.readLine()); //체스판 한 변의 길이 입력
-            mapSize = Integer.parseInt(st.nextToken());
+    public static void BFS(int startX, int startY, int endX, int endY) {
+        Deque<knight> deque = new ArrayDeque<>();
+        deque.add(new knight(startX, startY, 0));
+        visited[startX][startY] = true;
 
-            st = new StringTokenizer(bf.readLine()); //나이트가 현재 있는 칸
-            int start_x = Integer.parseInt(st.nextToken());
-            int start_y = Integer.parseInt(st.nextToken());
-
-            st = new StringTokenizer(bf.readLine()); //나이트가 이동하려는 칸
-            int end_x = Integer.parseInt(st.nextToken());
-            int end_y = Integer.parseInt(st.nextToken());
-
-            BFS(start_x, start_y, end_x, end_y);
-        }
-        for(int x : result) System.out.println(x);
-    }
-    public static void BFS(int s_x, int s_y, int e_x, int e_y){
-        ch = new int[mapSize][mapSize];
-        ch[s_x][s_y]=1;
-        Queue<Point> Q = new LinkedList<>();
-        Q.add(new Point(s_x, s_y));
-        //뻗어나간 Depth 깊이로 최단경로 찾기 = 정답
-        int level=0;
-        while(!Q.isEmpty()) {
-            int len = Q.size();
-            for(int i=0; i<len; i++) {
-                Point cur = Q.poll();
-                if(cur.x == e_x && cur.y == e_y) {
-                    result.add(level);
-                    return;
-                }
-                for (int j = 0; j < 8; j++) {
-                    int nx = cur.x + dx[j];
-                    int ny = cur.y + dy[j];
-                    if(nx>=0 && nx<mapSize && ny>=0 && ny<mapSize && ch[nx][ny]==0) {
-                        ch[nx][ny]=1;
-                        Q.add(new Point(nx, ny));
-                    }
+        while (!deque.isEmpty()) {
+            knight cur = deque.poll();
+            if(cur.x == endX && cur.y == endY) {
+                System.out.println(cur.cnt);
+                return;
+            }
+            for (int i = 0; i < dx.length; i++) {
+                int nextX = dx[i] + cur.x;
+                int nextY = dy[i] + cur.y;
+                if(nextX>=0 && nextX<N && nextY>=0 && nextY<N && !visited[nextX][nextY]) {
+                    visited[nextX][nextY] = true;
+                    deque.add(new knight(nextX, nextY, cur.cnt+1));
                 }
             }
-            level++;
+        }
+    }
+    static int[] dx = {-2, -1, 1, 2, 2, 1, -1, -2};
+    static int[] dy = {1, 2, 2, 1, -1, -2, -2, -1};
+    static int N;
+    static boolean[][] visited;
+    public static void main(String[] args) throws IOException{
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st;
+        int tc = Integer.parseInt(br.readLine());
+        for (int i = 0; i < tc; i++) {
+            N = Integer.parseInt(br.readLine());
+            visited = new boolean[N][N];
+
+            st = new StringTokenizer(br.readLine());
+            int sX = Integer.parseInt(st.nextToken());
+            int sY = Integer.parseInt(st.nextToken());
+
+            st = new StringTokenizer(br.readLine());
+            int eX = Integer.parseInt(st.nextToken());
+            int eY = Integer.parseInt(st.nextToken());
+
+            if(sX == eX && sY == eY) {
+                System.out.println(0);
+            }
+            else {
+                BFS(sX, sY, eX, eY);
+            }
         }
     }
 }
