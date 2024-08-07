@@ -1,60 +1,66 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.*;
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Deque;
+import java.util.StringTokenizer;
 
-class Person{
-    int number, degreeOfKinship;
-    Person(int number, int degreeOfKinship){
-        this.number = number;
-        this.degreeOfKinship = degreeOfKinship;
+class DegreeOfPerson {
+    int num, count;
+    public DegreeOfPerson(int num, int count) {
+        this.num = num;
+        this.count = count;
     }
 }
 public class Main {
-    static int n, m, person1, person2;
-    static List<List<Person>> map;
-    static int countOfMatch, answer;
-    public static void main(String[] args) throws IOException {
-        BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st;
+    static int N, M, person_A, person_B;
+    static boolean visited[];
+    static ArrayList<ArrayList<Integer>> graph;
+    public static int BFS() {
+        int answer = -1;
+        Deque<DegreeOfPerson> deque = new ArrayDeque<>();
+        deque.add(new DegreeOfPerson(person_A, 0));
+        visited[person_A] = true;
 
-        n = Integer.parseInt(bf.readLine()); //전체 사람 수
-        map = new ArrayList<>();
-        for (int i = 0; i <= n; i++) { //전체 사람 수만큼 ArrayList 공간 할당
-            map.add(new ArrayList<>());
-        }
-        st = new StringTokenizer(bf.readLine());
-        person1 = Integer.parseInt(st.nextToken()); //촌수를 구해야 할 사람 2명
-        person2 = Integer.parseInt(st.nextToken());
-        m = Integer.parseInt(bf.readLine()); //부모-자식 관계 개수
-        // 이때 앞에 나오는 번호 x는 뒤에 나오는 정수 y의 부모 번호를 나타낸다.
-        // 각 사람의 부모는 최대 한 명만 주어진다.
-        for (int i = 0; i < m; i++) {
-            st = new StringTokenizer(bf.readLine());
-            int parent = Integer.parseInt(st.nextToken()); //부모
-            int child = Integer.parseInt(st.nextToken()); //자식
-            map.get(parent).add(new Person(child, 0)); //촌수 값 0 기본 세팅
-            map.get(child).add(new Person(parent, 0));
-        }
-        System.out.println(BFS(person1, person2));
-    }
-    public static int BFS(int start, int end){
-        Queue<Person> Q = new LinkedList<>();
-        boolean[] visit = new boolean[n+1];
-        Q.add(new Person(start, 0));
-        visit[start]=true;
-        while(!Q.isEmpty()){
-            Person nowPerson = Q.poll();
-            if(nowPerson.number==end) return nowPerson.degreeOfKinship;
-            for(Person nxtPerson : map.get(nowPerson.number)){
-                if(!visit[nxtPerson.number]) {
-                    visit[nxtPerson.number]=true;
-                    //촌수 계산
-                    nxtPerson.degreeOfKinship = nowPerson.degreeOfKinship+1;
-                    Q.add(nxtPerson);
+        while (!deque.isEmpty()) {
+            DegreeOfPerson cur = deque.poll();
+            if(cur.num == person_B) {
+                return cur.count;
+            }
+            for(int next : graph.get(cur.num)) {
+                if(!visited[next]) {
+                    visited[next] = true;
+                    deque.add(new DegreeOfPerson(next, cur.count+1));
                 }
             }
         }
-        return -1;
+        return answer;
+    }
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st;
+
+        N = Integer.parseInt(br.readLine());
+        visited = new boolean[N+1];
+        graph = new ArrayList<>();
+        for (int i = 0; i <= N; i++) {
+            graph.add(new ArrayList<>());
+        }
+
+        st = new StringTokenizer(br.readLine());
+        person_A = Integer.parseInt(st.nextToken());
+        person_B = Integer.parseInt(st.nextToken());
+
+        M = Integer.parseInt(br.readLine());
+        for (int i = 0; i < M; i++) {
+            st = new StringTokenizer(br.readLine());
+            int a = Integer.parseInt(st.nextToken());
+            int b = Integer.parseInt(st.nextToken());
+            graph.get(a).add(b);
+            graph.get(b).add(a);
+        }
+
+        System.out.println(BFS());
     }
 }
