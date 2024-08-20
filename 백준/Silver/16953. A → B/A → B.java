@@ -1,27 +1,49 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.StringTokenizer;
 
+class NumAB {
+    long num;
+    int count;
+
+    public NumAB(long num, int count) {
+        this.num = num;
+        this.count = count;
+    }
+}
+
 public class Main {
-    static int answer=-1;
+    static long a, b;
+
     public static void main(String[] args) throws IOException {
         BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(bf.readLine());
-        long a = Long.parseLong(st.nextToken());
-        long b = Long.parseLong(st.nextToken());
-        //System.out.println(bfs());
-        dfs(0, a, b);
-        System.out.println(answer);
+        a = Long.parseLong(st.nextToken());
+        b = Long.parseLong(st.nextToken());
+        System.out.println(bfs());
     }
-    static void dfs(int L, long a, long b){
-        if(a>b) return;
-        if(a==b) answer=L+1;
-        else {
-            dfs(L+1, a*2, b);
-            dfs(L+1, a*10+1, b);
+
+    static int bfs() {
+        Deque<NumAB> deque = new ArrayDeque<>();
+        deque.add(new NumAB(a, 0));
+
+        while (!deque.isEmpty()) {
+            NumAB cur = deque.poll();
+            if (cur.num == b) {
+                return cur.count + 1;
+            }
+
+            if (cur.num * 2 <= b) {
+                deque.add(new NumAB(cur.num * 2, cur.count + 1));
+            }
+            if (cur.num * 10 + 1 <= b) {
+                deque.add(new NumAB(cur.num * 10 + 1, cur.count + 1));
+            }
         }
+
+        return -1;
     }
 }
