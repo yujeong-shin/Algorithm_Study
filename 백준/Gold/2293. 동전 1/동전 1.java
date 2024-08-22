@@ -6,22 +6,22 @@ import java.util.StringTokenizer;
 public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st = new StringTokenizer(br.readLine());
-        int N = Integer.parseInt(st.nextToken());
-        int[] arr = new int[N];
-        int target = Integer.parseInt(st.nextToken());
-        int[] dp = new int[target + 1];
-        dp[0] = 1;
-
-        for (int i = 0; i < N; i++) {
-            arr[i] = Integer.parseInt(br.readLine());
+        StringTokenizer st;
+        st = new StringTokenizer(br.readLine());
+        int n = Integer.parseInt(st.nextToken());
+        int k = Integer.parseInt(st.nextToken());
+        int[] coin = new int[n];
+        int[] dp = new int[k+1];
+        for (int i = 0; i < n; i++) {
+            coin[i] = Integer.parseInt(br.readLine());
         }
 
-        for (int a : arr) {
-            for (int j = a; j <= target; j++) {
-                dp[j] += dp[j - a];
+        dp[0] = 1;
+        for (int i = 0; i < n; i++) {
+            for (int j = coin[i]; j <= k; j++) {
+                dp[j] = dp[j] + dp[j - coin[i]];
             }
         }
-        System.out.println(dp[target]);
+        System.out.println(dp[k]);
     }
 }
