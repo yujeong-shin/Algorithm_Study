@@ -1,28 +1,30 @@
 import sys
 input = sys.stdin.readline
 
-n,d,k,c = map(int,input().split())
-count = 1
-s = [0] * (d+1)
-s[c] = 1
-data = []
+n, d, k, c = map(int, input().split())
+plate = []
 for i in range(n):
-    data.append(int(input()))
+    plate.append(int(input()))
+max_count = 0
 
-for i in range(k):
-    s[data[i]] += 1
-    if s[data[i]] == 1:
+sushi_count_list = [0] * (d+1)
+sushi_count_list[c] = 1
+
+count = 1
+for i in range(0, k):
+    sushi_count_list[plate[i]] += 1
+    if sushi_count_list[plate[i]] == 1:
         count += 1
+max_count = count
 
-answer = count
-
-for i in range(n-1):
-    s[data[i]] -= 1
-    if s[data[i]] == 0:
+for i in range(k, n+k-1):
+    sushi_count_list[plate[i-k]] -= 1
+    if sushi_count_list[plate[i-k]] == 0:
         count -= 1
-    s[data[(i+k) % n]] += 1
-    if s[data[(i+k) % n]] == 1:
+        
+    sushi_count_list[plate[i%n]] += 1
+    if sushi_count_list[plate[i%n]] == 1:
         count += 1
-    answer = max(answer, count)
-
-print(answer)
+        
+    max_count = max(max_count, count)
+print(max_count)
