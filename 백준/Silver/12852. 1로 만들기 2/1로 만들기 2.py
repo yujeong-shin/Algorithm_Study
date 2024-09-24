@@ -1,26 +1,25 @@
-from collections import deque
+n = int(input())  
+  
+dp = [i for i in range(n + 1)]  
+dp[1] = 0  
+history = [i for i in range(n + 1)]  
+history[1] = 0
 
-n = int(input())
-q = deque()
-q.append([n])
+for i in range(2, n + 1):  
+    dp[i] = dp[i - 1] + 1  
+    history[i] = i - 1  
+  
+    if i % 3 == 0 and dp[i] > dp[i // 3] + 1:  
+        dp[i] = dp[i // 3] + 1  
+        history[i] = i // 3  
+    if i % 2 == 0 and dp[i] > dp[i // 2] + 1:  
+        dp[i] = dp[i // 2] + 1  
+        history[i] = i // 2
 
+print(dp[n])  
+print(n, end=" ")  
 
-def bfs():
-    while q:
-        arr = q.popleft() # 정답 후보 리스트 한 줄 추출
-
-        x = arr[0]
-        if x == 1:
-            return arr
-
-        if x % 3 == 0:
-            q.append([x//3] + arr) # 기존 리스트를 뒤에 붙임으로써 경로 파악 [1, 3, 9, 10]
-
-        if x % 2 == 0:
-            q.append([x//2]+arr)
-
-        q.append([x-1]+arr)
-
-res = bfs()
-print(len(res)-1)
-print(*res[::-1]) # 리스트를 대괄호 없이 역순으로 출력 (start:end:direction)
+back_num = n  
+while history[back_num] != 0:  
+    print(history[back_num], end=" ")  
+    back_num = history[back_num]
