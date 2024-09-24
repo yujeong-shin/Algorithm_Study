@@ -1,44 +1,26 @@
-import sys
+from collections import deque
 
-def dfs(num):
-    global count, answer_count, anwer_list, answer_string
+n = int(input())
+q = deque()
+q.append([n])
 
-    if count > answer_count:
-        return
 
-    if num == 1:
-        if count < answer_count:
-            answer_count = count
-            answer_string = ' '.join(map(str, answer_list))
-        return
+def bfs():
+    while q:
+        arr = q.popleft() # 정답 후보 리스트 한 줄 추출
 
-    if num % 3 == 0:
-        count += 1
-        answer_list.append(num // 3)
-        dfs(num // 3)
-        answer_list.pop()
-        count -= 1
+        x = arr[0]
+        if x == 1:
+            return arr
 
-    if num % 2 == 0:
-        count += 1
-        answer_list.append(num // 2)
-        dfs(num // 2)
-        answer_list.pop()
-        count -= 1
+        if x % 3 == 0:
+            q.append([x//3] + arr) # 기존 리스트를 뒤에 붙임으로써 경로 파악 [1, 3, 9, 10]
 
-    count += 1
-    answer_list.append(num - 1)
-    dfs(num - 1)
-    answer_list.pop()
-    count -= 1
+        if x % 2 == 0:
+            q.append([x//2]+arr)
 
-X = int(input())
+        q.append([x-1]+arr)
 
-count = 0
-answer_count = sys.maxsize
-answer_list = [X]
-answer_string = ''
-dfs(X)
-
-print(answer_count)
-print(answer_string)
+res = bfs()
+print(len(res)-1)
+print(*res[::-1]) # 리스트를 대괄호 없이 역순으로 출력 (start:end:direction)
