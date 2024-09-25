@@ -16,10 +16,11 @@ for i in range(2, n + 1):
         dp[i] = dp[i // 2] + 1  
         history[i] = i // 2
 
-print(dp[n])  
-print(n, end=" ")  
-
+answer_list = []
+answer_list.append(n)
 back_num = n  
 while history[back_num] != 0:  
-    print(history[back_num], end=" ")  
+    answer_list.append(history[back_num])
     back_num = history[back_num]
+print(dp[n])
+print(*answer_list)
