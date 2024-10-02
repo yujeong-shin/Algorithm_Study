@@ -13,8 +13,7 @@ for i in range(len(question)):
             prev = question[i-1]
             if prev == '(':
                 deque.pop()
-                if len(deque) != 0:
-                    answer += len(deque)
+                answer += len(deque)
             else:
                 deque.pop()
                 answer += 1
