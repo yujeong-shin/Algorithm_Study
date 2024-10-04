@@ -6,15 +6,15 @@ arr = list(map(int, input().split()))
 arr.sort()
 
 lt, rt = 0, len(arr)-1
-min_sum = abs(arr[lt]+arr[rt])
-answer = [arr[lt], arr[rt]]
+answer = sys.maxsize
+answer_list = [0, 0]
 
 while lt < rt:
     sum = arr[lt] + arr[rt]
-    if abs(sum) < min_sum:
-        min_sum = abs(sum)
-        answer = [arr[lt], arr[rt]]
-        if min_sum == 0:
+    if abs(sum) < answer:
+        answer = abs(sum)
+        answer_list = [arr[lt], arr[rt]]
+        if answer == 0:
             break
 
     if sum < 0:
@@ -22,4 +22,4 @@ while lt < rt:
     else:
         rt -= 1
 
-print(*answer)
+print(*answer_list)
