@@ -6,7 +6,9 @@ n = int(input())
 cards = []
 
 for i in range(n):
-    heapq.heappush(cards, int(input()))
+    cards.append(int(input()))
+    #heapq.heappush(cards, int(input()))
+heapq.heapify(cards)
 
 result = 0
 while len(cards) > 1:
