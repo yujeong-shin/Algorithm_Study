@@ -8,10 +8,7 @@ flag = False
 
 for pt in range(len(string)):
     if string[pt].isalpha() or string[pt].isnumeric():
-        if flag:
-            temp.append(string[pt])
-        else:
-            temp.append(string[pt])
+        temp.append(string[pt])
     elif string[pt].isspace():
         if flag:
             temp.append(string[pt])
