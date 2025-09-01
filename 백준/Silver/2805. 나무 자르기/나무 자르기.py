@@ -1,20 +1,19 @@
 import sys
-n, m = map(int, sys.stdin.readline().split())
-trees = list(map(int, sys.stdin.readline().split()))
+input = sys.stdin.readline
 
-start, end = 0, max(trees)
+n, m = map(int, input().split())
+namu = list(map(int, input().split()))
 
-while start <= end:
-    sum = 0
-    mid = (start + end) // 2
-
-    for tree in trees:
-        if tree > mid:
-            sum += tree - mid
-    
-    if sum < m:  # 가져갈 수 있는 나무 길이 합이 목표보다 작은 경우
-        end = mid - 1  # 높이를 낮춰야 함
-    else:  # 가져갈 수 있는 나무 길이 합이 목표보다 크거나 같은 경우
-        start = mid + 1  # 높이를 높여야 함
-
-print(end)
+left, right = 0, max(namu)
+while left<=right:
+    mid = (left+right)//2
+    temp_sum = 0
+    for num in namu:
+        if num >= mid:
+            temp_sum += num-mid
+            
+    if temp_sum >= m:
+        left = mid+1
+    else:
+        right = mid-1
+print(right)
