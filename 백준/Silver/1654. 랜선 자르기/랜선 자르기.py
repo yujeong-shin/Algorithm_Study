@@ -1,23 +1,22 @@
 import sys
-k, n = map(int, sys.stdin.readline().split())
-lansuns = []
-for _ in range(k):
-    num = int(input())
-    lansuns.append(num)
+input = sys.stdin.readline
 
-start, end = 1, max(lansuns)
-answer = -sys.maxsize
-while start <= end:
+k, n = map(int, input().split())
+lines = [int(input()) for _ in range(k)]
+
+left, right = 1, max(lines)
+answer = -1
+while left<=right:
+    mid = (left+right)//2
+    #print("left: " + str(left) + ", right: " + str(right) + ", mid: " + str(mid))
     sum = 0
-    mid = (start + end) // 2
-
-    for lansun in lansuns:
-        sum += (lansun//mid)
-            
-    if sum >= n:
+    for line in lines:
+        sum += (line//mid)
+    
+    if sum < n:
+        right = mid-1
+    else: # N개보다 많이 만드는 것도 N개를 만드는 것에 포함
         answer = max(answer, mid)
-        start = mid + 1
-    else:
-        end = mid - 1
+        left = mid+1
 
 print(answer)
